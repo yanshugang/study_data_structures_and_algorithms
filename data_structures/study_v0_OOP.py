@@ -1,3 +1,8 @@
+"""
+ADT: Abstract Data Type，抽象数据类型
+"""
+
+
 class Bag(object):
     def __init__(self, maxsize=10):
         self.maxsize = maxsize
@@ -29,4 +34,3 @@ def test_bag():
 
     bag.remove(3)
     assert len(bag) == 2
-
