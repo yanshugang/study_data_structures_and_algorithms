@@ -13,7 +13,7 @@ def bubble_sort(l):
     if l_length <= 1:
         return l
 
-    for i in range(0, l_length-1):
+    for i in range(0, l_length - 1):
         print(l)
         for j in range(0, l_length - 1 - i):  # 这里之所以 n-1 还需要 减去 i 是因为每一轮冒泡最大的元素都会冒泡到最后，无需再比较
             if l[j] > l[j + 1]:

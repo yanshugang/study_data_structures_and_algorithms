@@ -54,7 +54,7 @@ def main():
     array = [10, 12, 1, 4, 6, 22, 24, 5]
     res = merge_sort(array)
     print(res)
- 
+
 
 if __name__ == '__main__':
     main()
