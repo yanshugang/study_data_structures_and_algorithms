@@ -1,5 +1,6 @@
 """
-队列 FIFO (first in first out)
+队列 Queue
+FIFO (first in first out)
 """
 from data_structures.s01_array import Array
 from data_structures.s02_linked_list import LinkedList, CircualDoubleLinedList

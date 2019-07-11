@@ -1,11 +1,19 @@
-"""单链表"""
+"""
+链表
+    单链表
+    双链表
+
++ = = = = = = = +
+| append | O(1) |
++ — — — — — — — +
+| remove | O(1) |
++ - - - - - - - +
+| search | O(n) |
++ = = = = = = = +
+
+"""
 
 
-# append/appendleft    O(1)
-# remove    O(n)
-# search    O(n)
-
-# 单链表
 class Node(object):
     def __init__(self, value=None, next=None):
         self.value, self.next = value, next

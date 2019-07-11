@@ -1,5 +1,5 @@
 """
-栈 stack
+堆栈/栈 Stack
 LIFO (last in first in)
 push\pop
 使用Deque实现stack
