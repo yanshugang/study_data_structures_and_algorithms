@@ -1,3 +1,8 @@
+"""
+使用数组实现哈希表
+"""
+
+
 class Array(object):
     def __init__(self, size=32, init=None):
         self._size = size
@@ -22,7 +27,7 @@ class Array(object):
 
 
 class Slot(object):
-    """定义一个 hash 表 数组的槽
+    """定义一个hash表数组的槽
     注意，一个槽有三种状态，看你能否想明白
     1.从未使用 HashMap.UNUSED。此槽没有被使用和冲突过，查找时只要找到 UNUSED 就不用再继续探查了
     2.使用过但是 remove 了，此时是 HashMap.EMPTY，该探查点后边的元素扔可能是有key
@@ -41,13 +46,23 @@ class HashTable(object):
         self._table = Array(8, init=HashTable.UNUSED)
         self.length = 0
 
+    def __contains__(self, key):
+        index = self._find_key(key)
+        return index is not None
+
+    def __len__(self):
+        return self.length
+
+    def __iter__(self):
+        # 遍历操作，只遍历key
+        for slot in self._table:
+            if slot not in (HashTable.EMPTY, HashTable.UNUSED):
+                yield slot.key
+
     @property
     def _load_factor(self):
         # 负载因子
         return self.length / float(len(self._table))
-
-    def __len__(self):
-        return self.length
 
     def _hash(self, key):
         # hash函数
@@ -79,10 +94,6 @@ class HashTable(object):
         while not self._slot_can_insert(index):
             index = (index * 5 + 1) % _len
         return index
-
-    def __contains__(self, key):
-        index = self._find_key(key)
-        return index is not None
 
     def _rehash(self):
         # 重哈希
@@ -126,11 +137,34 @@ class HashTable(object):
         self._table[index] = HashTable.EMPTY
         return value
 
-    def __iter__(self):
-        # 遍历操作，只遍历key
+
+# 使用hash表实现字典
+class DictADT(HashTable):
+    def __setitem__(self, key, value):
+        self.add(key, value)
+
+    def __getitem__(self, key):
+        if key not in self:
+            raise KeyError
+        else:
+            return self.get(key)
+
+    def _iter_slot(self):
         for slot in self._table:
             if slot not in (HashTable.EMPTY, HashTable.UNUSED):
-                yield slot.key
+                yield slot
+
+    def items(self):
+        for slot in self._iter_slot():
+            yield (slot.key, slot.value)
+
+    def keys(self):
+        for slot in self._iter_slot():
+            yield slot.key
+
+    def values(self):
+        for slot in self._iter_slot():
+            yield slot.value
 
 
 def test_hash_table():
@@ -145,3 +179,21 @@ def test_hash_table():
     h.remove("a")
     assert h.get("a") is None
     assert sorted(list(h)) == ["b", "c"]
+
+
+def test_dict_adt():
+    import random
+    d = DictADT()
+
+    d["a"] = 1
+    assert d["a"] == 1
+
+    l = list(range(30))
+    random.shuffle(l)
+    for i in l:
+        d.add(i, i)
+
+    for i in range(30):
+        assert d.get(i) == i
+
+    assert sorted(list(d.keys())) == sorted(l)
