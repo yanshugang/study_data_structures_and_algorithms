@@ -99,9 +99,3 @@ def test_stack():
     assert s.pop() == 0
 
     assert s.is_empty()
-
-    # 测试异常
-    import pytest
-    with pytest.raises(Exception) as excinfo:
-        s.pop()
-    assert 'empty' in str(excinfo.value)

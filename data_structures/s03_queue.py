@@ -100,21 +100,11 @@ def test_queue():
     assert q.pop() == 1
     assert q.pop() == 2
 
-    import pytest
-    with pytest.raises(EmptyError) as excinfo:
-        q.pop()
-    assert 'empty' in str(excinfo.value)
-
 
 def test_array_queue():
-    import pytest
     size = 5
     q = ArrayQueue(size)
     for i in range(size):
-        q.push()
-
-    with pytest.raises(FullError) as excinfo:
-        q.push(size)
-    assert 'full' in str(excinfo.value)
+        q.push(i)
 
     assert len(q) == size
